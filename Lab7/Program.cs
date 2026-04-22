@@ -1,173 +1,124 @@
 ﻿using System;
 
-namespace EjerciciosWhile
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            E1();
-            Console.WriteLine("\nPresione una tecla...");
-            Console.ReadKey();
+class Program {
+    static void Main() {
+        Console.Write("Nombre: ");
+        string n = Console.ReadLine();
+        Console.WriteLine("Hola " + n);
+        Console.WriteLine();
 
-            E2();
-            Console.WriteLine("\nPresione una tecla...");
-            Console.ReadKey();
+        Console.WriteLine("=== 1 ===");
+        suma();
+        Console.WriteLine();
 
-            E3();
-            Console.WriteLine("\nPresione una tecla...");
-            Console.ReadKey();
+        Console.WriteLine("=== 2 ===");
+        conv();
+        Console.WriteLine();
 
-            E4();
-            Console.WriteLine("\nFin del programa.");
-            Console.ReadKey();
+        Console.WriteLine("=== 3 ===");
+        juego();
+        Console.WriteLine();
+
+        Console.WriteLine("=== 4 ===");
+        pin();
+    }
+
+    static void suma() {
+        int n;
+        do {
+            Console.Write("Cuántos?: ");
+            n = int.Parse(Console.ReadLine());
+        } while (n <= 0);
+
+        int s = 0, i = 0;
+
+        while (i < n) {
+            Console.Write("Num " + (i+1) + ": ");
+            s += int.Parse(Console.ReadLine());
+            i++;
         }
 
-        static void E1()
-        {
-            Console.WriteLine("\n--- Ejercicio 1 ---");
-            int n, c = 0;
-            double num, s = 0;
+        Console.WriteLine("Suma: " + s);
+        Console.WriteLine("Prom: " + (double)s / n);
+    }
 
-            Console.Write("¿Cuántos números?: ");
-            while (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
-                Console.Write("Ingrese entero > 0: ");
+    static void conv() {
+        int op;
+        do {
+            Console.WriteLine("\n1) C->F");
+            Console.WriteLine("2) F->C");
+            Console.WriteLine("3) Km->Mi");
+            Console.WriteLine("4) Salir");
+            Console.Write("Op: ");
+            op = int.Parse(Console.ReadLine());
 
-            while (c < n)
-            {
-                Console.Write($"Número {c + 1}: ");
-                while (!double.TryParse(Console.ReadLine(), out num))
-                    Console.Write("Número válido: ");
-
-                s += num;
-                c++;
+            if (op == 1) {
+                Console.Write("C: ");
+                double c = double.Parse(Console.ReadLine());
+                Console.WriteLine("F: " + ((c * 9 / 5) + 32).ToString("F2"));
+            } 
+            else if (op == 2) {
+                Console.Write("F: ");
+                double f = double.Parse(Console.ReadLine());
+                Console.WriteLine("C: " + ((f - 32) * 5 / 9).ToString("F2"));
+            } 
+            else if (op == 3) {
+                Console.Write("Km: ");
+                double km = double.Parse(Console.ReadLine());
+                Console.WriteLine("Mi: " + (km / 1.60934).ToString("F2"));
+            } 
+            else if (op == 4) {
+                Console.WriteLine("Bye");
+            } 
+            else {
+                Console.WriteLine("Error");
             }
 
-            Console.WriteLine($"Suma: {s}");
-            Console.WriteLine($"Promedio: {s / n:F2}");
-        }
+        } while (op != 4);
+    }
 
-        static void E2()
-        {
-            Console.WriteLine("\n--- Ejercicio 2 ---");
-            int op;
-            double v, r;
-            bool s = false;
+    static void juego() {
+        Random r = new Random();
+        int x = r.Next(1, 101);
+        int i = 0, n;
 
-            do
-            {
-                Console.WriteLine("\n1.C→F  2.F→C  3.Km→Mi  4.Salir");
-                Console.Write("Opción: ");
+        Console.WriteLine("1-100");
 
-                while (!int.TryParse(Console.ReadLine(), out op))
-                    Console.Write("Número válido: ");
+        do {
+            Console.Write("Intento: ");
+            n = int.Parse(Console.ReadLine());
 
-                switch (op)
-                {
-                    case 1:
-                        Console.Write("Celsius: ");
-                        while (!double.TryParse(Console.ReadLine(), out v))
-                            Console.Write("Número válido: ");
-                        r = (v * 9 / 5) + 32;
-                        Console.WriteLine($"Resultado: {r:F2} °F");
-                        break;
-
-                    case 2:
-                        Console.Write("Fahrenheit: ");
-                        while (!double.TryParse(Console.ReadLine(), out v))
-                            Console.Write("Número válido: ");
-                        r = (v - 32) * 5 / 9;
-                        Console.WriteLine($"Resultado: {r:F2} °C");
-                        break;
-
-                    case 3:
-                        Console.Write("Kilómetros: ");
-                        while (!double.TryParse(Console.ReadLine(), out v))
-                            Console.Write("Número válido: ");
-                        r = v * 0.621371;
-                        Console.WriteLine($"Resultado: {r:F2} Millas");
-                        break;
-
-                    case 4:
-                        s = true;
-                        break;
-
-                    default:
-                        Console.WriteLine("Opción inválida.");
-                        break;
-                }
-
-            } while (!s);
-        }
-
-        static void E3()
-        {
-            Console.WriteLine("\n--- Ejercicio 3 ---");
-            Random r = new Random();
-            int na = r.Next(1, 101);
-            int i, c = 0;
-            bool ok = false;
-
-            Console.WriteLine("Adivina el número (1-100)");
-
-            while (!ok)
-            {
-                Console.Write("Intento: ");
-                while (!int.TryParse(Console.ReadLine(), out i))
-                    Console.Write("Número válido: ");
-
-                if (i < 1 || i > 100)
-                {
-                    Console.WriteLine("Fuera de rango.");
-                    continue;
-                }
-
-                c++;
-
-                if (i < na)
-                    Console.WriteLine("Más alto");
-                else if (i > na)
-                    Console.WriteLine("Más bajo");
-                else
-                {
-                    ok = true;
-                    Console.WriteLine($"Correcto en {c} intentos");
-                }
+            if (n < 1 || n > 100) {
+                Console.WriteLine("Fuera");
+                continue;
             }
-        }
 
-        static void E4()
-        {
-            Console.WriteLine("\n--- Ejercicio 4 ---");
-            const int pc = 1234;
-            const int mi = 3;
-            int pi, c = 0;
-            bool ok = false;
+            i++;
 
-            do
-            {
-                Console.Write("PIN: ");
-                while (!int.TryParse(Console.ReadLine(), out pi))
-                    Console.Write("Número válido: ");
+            if (n < x) Console.WriteLine("Más");
+            else if (n > x) Console.WriteLine("Menos");
+            else Console.WriteLine("Bien (" + i + ")");
+        } while (n != x);
+    }
 
-                c++;
+    static void pin() {
+        int ok = 1234;
+        int i = 0, p;
+        bool acc = false;
 
-                if (pi == pc)
-                {
-                    Console.WriteLine("Acceso concedido");
-                    ok = true;
-                }
-                else
-                {
-                    Console.WriteLine("Incorrecto");
-                    if (c < mi)
-                        Console.WriteLine($"Intentos restantes: {mi - c}");
-                }
+        do {
+            Console.Write("PIN: ");
+            p = int.Parse(Console.ReadLine());
+            i++;
 
-            } while (c < mi && !ok);
+            if (p == ok) {
+                Console.WriteLine("OK");
+                acc = true;
+            } else {
+                Console.WriteLine("Mal");
+                if (i == 3) Console.WriteLine("Bloqueado");
+            }
 
-            if (!ok)
-                Console.WriteLine("Cuenta bloqueada");
-        }
+        } while (i < 3 && !acc);
     }
 }
